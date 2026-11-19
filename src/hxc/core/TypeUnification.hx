@@ -766,7 +766,7 @@ class TypeUnification {
 	static inline function hasExtraField(t:T, n:String):UnifyErrorKind return Has_extra_field(t, n);
 
 	static function unifyAccess(a1:VarAccess, a2:VarAccess):Bool {
-		if (Type.enumEq(a1, a2)) return true;
+		if (std.Type.enumEq(a1, a2)) return true;
 		return switch [a1, a2] {
 			case [_, AccNo] | [_, AccNever]: true;
 			case [AccInline, AccNormal]: true;
@@ -814,13 +814,13 @@ class TypeUnification {
 	static function varAccessEq(a:VarAccess, b:VarAccess):Bool {
 		return switch [a, b] {
 			case [AccRequire(s1, m1), AccRequire(s2, m2)]: s1 == s2 && m1 == m2;
-			case _: Type.enumEq(a, b);
+			case _: std.Type.enumEq(a, b);
 		}
 	}
 	static function fieldKindEq(k1:FieldKind, k2:FieldKind):Bool {
 		return switch [k1, k2] {
 			case [Var(v1), Var(v2)]: varAccessEq(v1.read, v2.read) && varAccessEq(v1.write, v2.write);
-			case [Method(m1), Method(m2)]: Type.enumEq(m1, m2);
+			case [Method(m1), Method(m2)]: std.Type.enumEq(m1, m2);
 			case _: false;
 		}
 	}

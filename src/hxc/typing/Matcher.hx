@@ -2,6 +2,7 @@ package hxc.typing;
 
 import hxc.ast.Position;
 import hxc.ast.Ast;
+import hxc.ast.Ast.Printer;
 import hxc.core.Type;
 import hxc.core.TypeFunctions;
 import hxc.core.TypeUnification;
@@ -645,7 +646,7 @@ class PatternMaker {
 		// whole pattern the user wrote (fail closes over make's `e`), not the sub-expression the arm was
 		// looking at.
 		function fail():Dynamic {
-			throw new TypingError("Unrecognized pattern: " + hxc.ast.Printer.sExpr(e), p);
+			throw new TypingError("Unrecognized pattern: " + Printer.sExpr(e), p);
 		}
 		function hasStringInterpolation(s:String):Bool {
 			var i = 0;

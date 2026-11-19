@@ -2,6 +2,7 @@ package hxc.typing;
 
 import hxc.ast.Position;
 import hxc.ast.Ast;
+import hxc.ast.Ast.Printer;
 import hxc.core.Type;
 import hxc.core.TypeFunctions;
 import hxc.core.TypingError;
@@ -1240,7 +1241,7 @@ class Typeload {
 		return switch (t) {
 			case TInst(c, tl):
 				switch (c.kind) {
-					case KExpr(e): genericIdentSafe(hxc.ast.Printer.sExpr(e));
+					case KExpr(e): genericIdentSafe(Printer.sExpr(e));
 					case _:
 						var tail = genericNameTail(s, top, tl, p);
 						genericIdentSafe(genericTypePath(c.path)) + tail;

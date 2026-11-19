@@ -263,7 +263,7 @@ class GenerateJvm {
 			// depends on it.
 			DynamicAccess.generate(gctx, jc, [
 				for (f in fields)
-					{name: f.name, jsig: f.jsig, kind: FieldKind.Var(new VarKind(AccNormal, AccNormal))}
+					{name: f.name, jsig: f.jsig, kind: hxc.core.Type.FieldKind.Var(new VarKind(AccNormal, AccNormal))}
 			], true);
 			switch (gctx.typedefInterfaces.getInterfaceClass(path)) {
 				case null:

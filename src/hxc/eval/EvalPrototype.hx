@@ -1,6 +1,7 @@
 package hxc.eval;
 
 import hxc.ast.Ast;
+import hxc.ast.Ast.Printer;
 import hxc.core.Type;
 import hxc.core.TypeFunctions;
 import hxc.core.Globals.Path;
@@ -338,7 +339,7 @@ class EvalPrototype {
 				out.push("");
 			else {
 				hasValue = true;
-				out.push(hxc.ast.Printer.sExpr(e));
+				out.push(Printer.sExpr(e));
 			}
 		}
 		return hasValue ? out.join(":") : null;
@@ -391,7 +392,7 @@ class EvalPrototype {
 				var ve = fieldValueExpr(cf.meta);
 				if (ve != null) {
 					b.add(" expr=\"");
-					b.add(xmlEscape(hxc.ast.Printer.sExpr(ve)));
+					b.add(xmlEscape(Printer.sExpr(ve)));
 					b.add("\"");
 				}
 				var r = rttiAccess(vk.read);

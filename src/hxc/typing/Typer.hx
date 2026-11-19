@@ -13,6 +13,8 @@ import hxc.core.WithType;
 import hxc.debug.DebugDump;
 import hxc.typing.AccessKind;
 import hxc.typing.FieldAccess;
+import hxc.typing.FieldAccess.FieldAccessTools;
+import hxc.core.Type.Flags;
 import hxc.typing.Matcher.Match;
 import hxc.typing.TyperContext.CurrentFun;
 import hxc.typing.Typeload;
@@ -4038,9 +4040,9 @@ class Typer {
 				inner;
 			case AKExpr(te): te;
 			case AKField(fa) | AKAccessor(fa):
-				try hxc.typing.FieldAccessTools.getFieldExpr(fa, FRead) catch (_:Dynamic) null;
+				try FieldAccessTools.getFieldExpr(fa, FRead) catch (_:Dynamic) null;
 			case AKUsingField(se) | AKUsingAccessor(se):
-				try hxc.typing.FieldAccessTools.getFieldExpr(se.access, FRead) catch (_:Dynamic) null;
+				try FieldAccessTools.getFieldExpr(se.access, FRead) catch (_:Dynamic) null;
 			case _: null;
 		};
 		var te = readExpr(acc);
@@ -4544,7 +4546,7 @@ class Typer {
 					// typed as the unification left it - from StaticExtension.
 					var shown = TypeFunctions.copyField(prepareUsingField(cf));
 					shown.params = [];
-					shown.flags = hxc.core.Flags.setFlag(shown.flags, TypeFunctions.intOfClassFieldFlag(CfPublic));
+					shown.flags = Flags.setFlag(shown.flags, TypeFunctions.intOfClassFieldFlag(CfPublic));
 					shown.type = t;
 					jsonEntries.push({cf: shown, scope: CFSMember, originClass: null, originAnon: null, builtIn: false,
 						origin: hxc.core.CompletionItem.ClassFieldOrigin.StaticExtension(switch (uc.kind) {
@@ -4653,7 +4655,7 @@ class Typer {
 			case AKField(fa) | AKAccessor(fa):
 				// Go through the field EXPRESSION rather than claiming the position outright: the
 				// receiver may be what the cursor is actually on, and only the recursion knows.
-				var te = try hxc.typing.FieldAccessTools.getFieldExpr(fa, FRead) catch (_:Dynamic) null;
+				var te = try FieldAccessTools.getFieldExpr(fa, FRead) catch (_:Dynamic) null;
 				if (te != null) checkDisplayDefinition(ctx, te);
 				if (displayFound == null) displayFound = [fa.field.namePos];
 			// A static-extension callee resolves to a field just the same; the OVERLOAD the call
